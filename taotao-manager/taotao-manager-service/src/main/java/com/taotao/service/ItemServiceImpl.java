@@ -12,8 +12,14 @@ public class ItemServiceImpl implements ItemService {
 	@Autowired
 	private TbItemMapper itemMapper;
 	@Override
-	public TbItem getItemById(Long itemId) {
+	public TbItem getItemById(Long itemId) throws Exception{
 		return itemMapper.selectByPrimaryKey(itemId);
 	}
+	/*@Override
+	public EasyUIResult getItemList(Integer page, Integer rows)
+			throws Exception {
+		
+		return null;
+	}*/
 
 }
