@@ -19,6 +19,7 @@ public class PictureController {
 	@ResponseBody
 	public String uploadPic(MultipartFile uploadFile){
 		//js插件的兼容性要求返回json字符串
+		//responseBody注解返回的是contentType是application/json，如果返回字符串则contentType是text
 		return JsonUtils.objectToJson(pictureService.uploadFile(uploadFile));
 	}
 }
