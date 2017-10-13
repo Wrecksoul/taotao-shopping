@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.taotao.common.pojo.EasyUIResult;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.pojo.TbItem;
 import com.taotao.service.ItemService;
 
@@ -39,6 +41,12 @@ public class ItemController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	@ResponseBody
+	public TaotaoResult saveItem(TbItem item,String desc){
+		return itemService.createItem(item,desc);
 	}
 
 }

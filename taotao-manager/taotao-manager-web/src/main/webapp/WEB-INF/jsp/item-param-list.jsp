@@ -18,12 +18,16 @@
 <script>
 
 	function formatItemParamData(value , index){
-		var json = JSON.parse(value);
-		var array = [];
-		$.each(json,function(i,e){
-			array.push(e.group);
-		});
-		return array.join(",");
+		if(value!=null){
+			var json = JSON.parse(value);
+			var array = [];
+			$.each(json,function(i,e){
+				array.push(e.group);
+			});
+			return array.join(",");
+		}else{
+			return null;
+		}
 	}
 
     function getSelectionsIds(){
@@ -42,7 +46,8 @@
         iconCls:'icon-add',
         handler:function(){
         	TAOTAO.createWindow({
-        		url : "/item-param-add",
+        		url : "/item-param-add",//经过后台的跳转controller进行跳转到jsp
+        		title:"商品规格模板添加"
         	});
         }
     },{
