@@ -13,9 +13,12 @@ import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.utils.IDUtils;
 import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
+import com.taotao.mapper.TbItemParamItemMapper;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
+import com.taotao.pojo.TbItemParam;
+import com.taotao.pojo.TbItemParamItem;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -24,7 +27,9 @@ public class ItemServiceImpl implements ItemService {
 	private TbItemMapper itemMapper;
 	@Autowired
 	private TbItemDescMapper itemDescMapper;
-	
+	@Autowired
+	private TbItemParamItemMapper itemParamItemMapper;
+
 	@Override
 	public TbItem getItemById(Long itemId) throws Exception {
 		return itemMapper.selectByPrimaryKey(itemId);
@@ -47,31 +52,42 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public TaotaoResult createItem(TbItem item, String desc) {
+	public TaotaoResult createItem(TbItem item, String desc, String itemParam) {
 		Long itemId = IDUtils.genItemId();
 		item.setId(itemId);
 		item.setStatus((byte) 1);
 		item.setCreated(new Date());
 		item.setUpdated(new Date());
-		int rs = itemMapper.insert(item);
-		if (rs > 0) {
-			//添加商品描述
-			insertItemDesc(itemId, desc);
-			return TaotaoResult.ok();
-		} else {
-			return TaotaoResult.build(500, "insert false");
-		}
+		itemMapper.insert(item);
+		// 添加商品描述
+		insertItemDesc(itemId, desc);
+		insertItemParam(itemId, itemParam);
+		return TaotaoResult.ok();
 	}
+
 	/**
 	 * 添加商品描述
 	 */
-	private int insertItemDesc(Long id,String desc){
+	private int insertItemDesc(Long id, String desc) {
 		TbItemDesc itemDesc = new TbItemDesc();
 		itemDesc.setItemId(id);
 		itemDesc.setCreated(new Date());
 		itemDesc.setUpdated(new Date());
 		itemDesc.setItemDesc(desc);
 		return itemDescMapper.insert(itemDesc);
+	}
+
+	/**
+	 * 添加商品规格参数
+	 */
+	private int insertItemParam(Long itemId,String itemParam) {
+
+		TbItemParamItem record = new TbItemParamItem();
+		record.setParamData(itemParam);
+		record.setCreated(new Date());
+		record.setUpdated(new Date());
+		record.setItemId(itemId);
+		return itemParamItemMapper.insert(record);
 	}
 
 	@Override
