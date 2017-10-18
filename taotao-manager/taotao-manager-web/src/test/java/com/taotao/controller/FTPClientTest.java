@@ -9,7 +9,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.junit.Test;
 
 public class FTPClientTest {
-	@Test
+	//@Test
 	public void testFtpClient() {
 		FTPClient client = new FTPClient();
 		try {
