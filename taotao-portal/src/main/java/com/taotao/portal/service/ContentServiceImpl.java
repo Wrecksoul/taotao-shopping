@@ -15,14 +15,13 @@ import com.taotao.pojo.TbContent;
 
 @Service
 public class ContentServiceImpl implements ContentService{
-	@Value("${rest_index_ad_url}")
+	@Value("${rest_base_url}")
 	private String rest_base_url;
 	@Value("${rest_index_ad_url}")
 	private String rest_index_ad_url;
 
 	@Override
 	public String getContentListInJson() {
-		
 		String json = HttpClientUtil.doGet(rest_base_url+rest_index_ad_url);
 		try {
 			TaotaoResult taotaoResult = TaotaoResult.formatToList(json, TbContent.class);
