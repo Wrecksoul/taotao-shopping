@@ -6,10 +6,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	
+
 	<!-- 处理器映射器、处理器适配器注解驱动 -->
-	<mvc:annotation-driven></mvc:annotation-driven>
-	
+	<mvc:annotation-driven
+		content-negotiation-manager="contentNegotiationManager" />
+	<!-- 以.html为后缀名访问，默认返回数据类型是 text/html， 所以要修改返回的数据类型来使得responsebody注解使用时不会报406错误 -->
+	<bean id="contentNegotiationManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="application/json;charset=UTF-8" />
+			</map>
+		</property>
+	</bean>
+
 	<!-- 视图解析器 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -18,5 +28,5 @@
 	</bean>
 
 	<context:component-scan base-package="com.taotao.portal.controller"></context:component-scan>
-	
+
 </beans>
