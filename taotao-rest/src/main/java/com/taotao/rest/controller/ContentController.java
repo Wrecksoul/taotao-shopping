@@ -35,4 +35,8 @@ public class ContentController {
 			return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 	}
+	
+	public TaotaoResult delContentCache(){
+		return TaotaoResult.ok();
+	}
 }

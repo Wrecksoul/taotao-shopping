@@ -16,6 +16,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.junit.Test;
 
 public class HttpClientTest {
 
@@ -48,7 +49,7 @@ public class HttpClientTest {
 			e.printStackTrace();
 		}
 	}
-	//@Test
+	@Test
 	public void doPost(){
 		HttpPost post = new HttpPost("http://localhost:8082/httpClient/post.html");
 		List<NameValuePair> list = new ArrayList<>();
